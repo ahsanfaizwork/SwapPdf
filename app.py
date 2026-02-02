@@ -40,6 +40,10 @@ def check_file_size(file_obj):
 def index():
     return render_template('index.html')
 
+@app.route('/ads.txt')
+def ads_txt():
+    return send_file('ads.txt', mimetype='text/plain')
+
 @app.route('/merge', methods=['POST'])
 @limiter.limit("30 per hour")
 def merge_pdfs():
