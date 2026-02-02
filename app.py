@@ -45,15 +45,6 @@ def ads_txt():
     ads_path = os.path.join(os.path.dirname(__file__), 'ads.txt')
     return send_file(ads_path, mimetype='text/plain')
 
-@app.route('/googleffad24874dea0564.html')
-def google_verify():
-    verify_path = os.path.join(os.path.dirname(__file__), 'googleffad24874dea0564.html')
-    return send_file(verify_path, mimetype='text/html')
-
-@app.route('/google-site-verification-mJTBf60hu7amVnqkdlIfe8dLJVQvNbBlQYahOAzYIqU.html')
-def google_verify_txt():
-    verify_path = os.path.join(os.path.dirname(__file__), 'google-site-verification-mJTBf60hu7amVnqkdlIfe8dLJVQvNbBlQYahOAzYIqU.html')
-    return send_file(verify_path, mimetype='text/html')
 
 # Serve verification files from static folder as fallback
 @app.route('/googleffad24874dea0564.html')
