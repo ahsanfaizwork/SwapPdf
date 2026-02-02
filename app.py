@@ -55,6 +55,15 @@ def google_verify_txt():
     verify_path = os.path.join(os.path.dirname(__file__), 'google-site-verification-mJTBf60hu7amVnqkdlIfe8dLJVQvNbBlQYahOAzYIqU.html')
     return send_file(verify_path, mimetype='text/html')
 
+# Serve verification files from static folder as fallback
+@app.route('/googleffad24874dea0564.html')
+def google_static_verify():
+    return app.send_static_file('googleffad24874dea0564.html')
+
+@app.route('/google-site-verification-mJTBf60hu7amVnqkdlIfe8dLJVQvNbBlQYahOAzYIqU.html')
+def google_static_verify2():
+    return app.send_static_file('google-site-verification-mJTBf60hu7amVnqkdlIfe8dLJVQvNbBlQYahOAzYIqU.html')
+
 @app.route('/merge', methods=['POST'])
 @limiter.limit("30 per hour")
 def merge_pdfs():
