@@ -42,7 +42,8 @@ def index():
 
 @app.route('/ads.txt')
 def ads_txt():
-    return send_file('ads.txt', mimetype='text/plain')
+    ads_path = os.path.join(os.path.dirname(__file__), 'ads.txt')
+    return send_file(ads_path, mimetype='text/plain')
 
 @app.route('/merge', methods=['POST'])
 @limiter.limit("30 per hour")
