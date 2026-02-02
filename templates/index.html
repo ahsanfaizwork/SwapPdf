@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mergify - PDF Conversion Tools</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        position: relative;
+      }
+
+      .credit {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+      }
+
+      .header img {
+        width: 280px;
+        height: auto;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+      }
+
+      .content {
+        padding: 2.5rem;
+      }
+
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .tool-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+      }
+
+      .tool-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 8px 16px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .tool-card strong {
+        display: block;
+        color: #667eea;
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+      }
+
+      .tool-card input[type=file] {
+        display: block;
+        margin: 0.8rem 0;
+        padding: 0.8rem;
+        border: 2px dashed #667eea;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      .tool-card input[type=file]::-webkit-file-upload-button {
+        padding: 0.5rem 1rem;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
+
+      .tool-card button {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+      }
+
+      .tool-card button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+      }
+
+      .tool-card button:active {
+        transform: scale(0.98);
+      }
+
+      .footer {
+        background: #f8f9fa;
+        padding: 2rem;
+        text-align: center;
+        color: #666;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .footer p {
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+      }
+
+      .file-list {
+        background: #e8f4f8;
+        border-left: 4px solid #667eea;
+        padding: 1rem;
+        margin-top: 0.8rem;
+        border-radius: 6px;
+        display: none;
+      }
+
+      .file-list.show {
+        display: block;
+      }
+
+      .file-list h4 {
+        color: #667eea;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .file-list ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .file-list li {
+        color: #333;
+        padding: 0.4rem 0;
+        font-size: 0.9rem;
+        word-break: break-all;
+      }
+
+      .file-list li:before {
+        content: "✓ ";
+        color: #667eea;
+        font-weight: bold;
+        margin-right: 0.4rem;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 { font-size: 1.8rem; }
+        .header { padding: 2rem 1rem; }
+        .content { padding: 1.5rem; }
+        .tools-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="credit">By As & Co</div>
+    
+    <div class="container">
+      <div class="header">
+        <img src="/static/mergify-logo.png" alt="Mergify Logo" onerror="this.style.display='none'" />
+        <p>Fast & Easy PDF Conversion Tools</p>
+      </div>
+
+      <div class="content">
+        <div class="tools-grid">
+          <div class="tool-card">
+            <strong>📑 Merge PDFs</strong>
+            <form action="/merge" method="post" enctype="multipart/form-data">
+              <input type="file" name="files" accept="application/pdf" multiple required onchange="showFiles(this, 'merge-files')" />
+              <div class="file-list" id="merge-files">
+                <h4>Selected files:</h4>
+                <ul id="merge-files-list"></ul>
+              </div>
+              <button type="submit">Merge</button>
+            </form>
+          </div>
+
+          <div class="tool-card">
+            <strong>✂️ Split PDF</strong>
+            <form action="/split" method="post" enctype="multipart/form-data">
+              <input type="file" name="file" accept="application/pdf" required onchange="showFiles(this, 'split-files')" />
+              <div class="file-list" id="split-files">
+                <h4>Selected file:</h4>
+                <ul id="split-files-list"></ul>
+              </div>
+              <button type="submit">Split</button>
+            </form>
+          </div>
+
+          <div class="tool-card">
+            <strong>🖼️ Images to PDF</strong>
+            <form action="/images2pdf" method="post" enctype="multipart/form-data">
+              <input type="file" name="images" accept="image/*" multiple required onchange="showFiles(this, 'images-files')" />
+              <div class="file-list" id="images-files">
+                <h4>Selected images:</h4>
+                <ul id="images-files-list"></ul>
+              </div>
+              <button type="submit">Convert</button>
+            </form>
+          </div>
+
+          <div class="tool-card">
+            <strong>🎨 PDF to Images</strong>
+            <form action="/pdf2images" method="post" enctype="multipart/form-data">
+              <input type="file" name="file" accept="application/pdf" required onchange="showFiles(this, 'pdf2img-files')" />
+              <div class="file-list" id="pdf2img-files">
+                <h4>Selected file:</h4>
+                <ul id="pdf2img-files-list"></ul>
+              </div>
+              <button type="submit">Extract</button>
+            </form>
+          </div>
+
+          <div class="tool-card">
+            <strong>📦 Compress PDF</strong>
+            <form action="/compress" method="post" enctype="multipart/form-data">
+              <input type="file" name="file" accept="application/pdf" required onchange="showFiles(this, 'compress-files')" />
+              <div class="file-list" id="compress-files">
+                <h4>Selected file:</h4>
+                <ul id="compress-files-list"></ul>
+              </div>
+              <button type="submit">Compress</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p><strong>⚡ Fast Processing</strong> | Max 50MB per file</p>
+        <p>Rate limits apply for fair usage. Deploy with Stripe to monetize!</p>
+      </div>
+    </div>
+  </body>
+  <script>
+    function showFiles(input, containerId) {
+      const container = document.getElementById(containerId);
+      const listId = containerId + '-list';
+      const list = document.getElementById(listId);
+      
+      list.innerHTML = '';
+      
+      if (input.files && input.files.length > 0) {
+        for (let file of input.files) {
+          const li = document.createElement('li');
+          li.textContent = file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+          list.appendChild(li);
+        }
+        container.classList.add('show');
+      } else {
+        container.classList.remove('show');
+      }
+    }
+  </script>
+</html>
